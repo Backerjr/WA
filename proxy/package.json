@@ -1,4 +1,4 @@
- HEAD
+ 
 {
   "name": "@polyglot/proxy",
   "version": "0.1.0",
@@ -19,4 +19,3 @@
   }
 }
 
- 8520d26 (save and exit the editor to proceed with the commit.)
