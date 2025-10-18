@@ -1,0 +1,11 @@
+{
+  "name": "@polyglot/web",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "echo \"Running Web dev server...\" && sleep infinity",
+    "build": "echo \"Web build complete.\"",
+    "lint": "echo \"Web lint complete.\"",
+    "test": "echo \"Web tests complete.\""
+  }
+}
