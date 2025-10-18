@@ -1,6 +1,6 @@
+<<<<<<< HEAD
 {
   "name": "@polyglot/proxy",
- codex/generate-project-structure-for-pnpm-monorepo-8udw0o
   "version": "0.1.0",
   "private": true,
   "main": "index.js",
@@ -18,3 +18,5 @@
     "test": "echo \"Proxy tests complete.\""
   }
 }
+=======
+>>>>>>> 8520d26 (save and exit the editor to proceed with the commit.)

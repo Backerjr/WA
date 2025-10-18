@@ -1,6 +1,6 @@
+<<<<<<< HEAD
 {
   "name": "@polyglot/web",
- codex/generate-project-structure-for-pnpm-monorepo-8udw0o
   "version": "0.1.0",
 
   "version": "0.0.0",
@@ -13,3 +13,5 @@
     "test": "echo \"Web tests complete.\""
   }
 }
+=======
+>>>>>>> 8520d26 (save and exit the editor to proceed with the commit.)
