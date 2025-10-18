@@ -1,4 +1,4 @@
-<<<<<<< H{
+
   "name": "@polyglot/proxy",
   "version": "0.1.0",
   "private": true,
@@ -17,5 +17,3 @@
     "test": "echo \"Proxy tests complete.\""
   }
 }
-=======
->>>>>>> 8520d26 (save and exit the editor to proceed with the commit.)
