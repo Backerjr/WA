@@ -20,6 +20,6 @@
     "build": "echo \"API build complete.\"",
     "lint": "echo \"API lint complete.\"",
     "test": "echo \"API tests complete.\""
- main
+ 
   }
 }
