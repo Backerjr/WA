@@ -1,0 +1,11 @@
+{
+  "name": "@polyglot/api",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "echo \"Running API dev server...\" && sleep infinity",
+    "build": "echo \"API build complete.\"",
+    "lint": "echo \"API lint complete.\"",
+    "test": "echo \"API tests complete.\""
+  }
+}

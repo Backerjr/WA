@@ -1,0 +1,11 @@
+{
+  "name": "@polyglot/proxy",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "echo \"Running Proxy dev server...\" && sleep infinity",
+    "build": "echo \"Proxy build complete.\"",
+    "lint": "echo \"Proxy lint complete.\"",
+    "test": "echo \"Proxy tests complete.\""
+  }
+}
