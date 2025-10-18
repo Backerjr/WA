@@ -1,6 +1,10 @@
 {
   "name": "@polyglot/web",
+ codex/generate-project-structure-for-pnpm-monorepo-8udw0o
+  "version": "0.1.0",
+
   "version": "0.0.0",
+ main
   "private": true,
   "scripts": {
     "dev": "echo \"Running Web dev server...\" && sleep infinity",
