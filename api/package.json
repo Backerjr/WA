@@ -1,6 +1,5 @@
 {
   "name": "@polyglot/api",
- codex/generate-project-structure-for-pnpm-monorepo-8udw0o
   "version": "0.1.0",
   "private": true,
   "main": "server.js",
