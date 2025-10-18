@@ -1,4 +1,4 @@
-≈{
+
   "name": "@polyglot/proxy",
   "version": "0.1.0",
   "private": true,
@@ -10,4 +10,4 @@
     "lint": "echo 'Proxy lint complete.'",
     "test": "echo 'Proxy tests complete.'"
   }
-}
+
