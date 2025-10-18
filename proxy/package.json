@@ -5,11 +5,11 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "dev": "node index.js",
-    "start": "node index.js",
-    "build": "echo 'Proxy build complete.'",
-    "lint": "echo 'Proxy lint complete.'",
-    "test": "echo 'Proxy tests complete.'"
+  "dev": "node index.js",
+  "start": "node index.js",
+  "build": "echo \"Proxy build complete.\"",
+  "lint": "echo \"Proxy lint complete.\"",
+  "test": "echo \"Proxy tests complete.\""
   },
   "dependencies": {}
 }
