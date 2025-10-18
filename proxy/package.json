@@ -1,11 +1,18 @@
 {
   "name": "@polyglot/proxy",
+ codex/generate-project-structure-for-pnpm-monorepo-8udw0o
   "version": "0.1.0",
   "private": true,
   "main": "index.js",
   "scripts": {
     "dev": "node index.js",
     "start": "node index.js",
+
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "echo \"Running Proxy dev server...\" && sleep infinity",
+ main
     "build": "echo \"Proxy build complete.\"",
     "lint": "echo \"Proxy lint complete.\"",
     "test": "echo \"Proxy tests complete.\""

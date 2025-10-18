@@ -1,5 +1,6 @@
 {
   "name": "@polyglot/api",
+ codex/generate-project-structure-for-pnpm-monorepo-8udw0o
   "version": "0.1.0",
   "private": true,
   "main": "server.js",
@@ -12,5 +13,14 @@
   },
   "dependencies": {
     "express": "^4.19.2"
+
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "echo \"Running API dev server...\" && sleep infinity",
+    "build": "echo \"API build complete.\"",
+    "lint": "echo \"API lint complete.\"",
+    "test": "echo \"API tests complete.\""
+ main
   }
 }
