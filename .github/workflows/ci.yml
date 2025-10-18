@@ -16,28 +16,53 @@ jobs:
       contents: read
 
     steps:
+      # ------------------------------
+      # 1. Checkout the repository
+      # ------------------------------
       - name: 🛎️ Checkout repository
         uses: actions/checkout@v4
 
+      # ------------------------------
+      # 2. Setup Node.js (v18+)
+      # ------------------------------
       - name: 🧰 Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18.x
-          cache: "pnpm"
 
+      # ------------------------------
+      # 3. Enable Corepack & install pnpm
+      # ------------------------------
       - name: ⚙️ Enable Corepack & Prepare pnpm
         run: |
           corepack enable
           corepack prepare pnpm@latest --activate
           pnpm -v
 
-      - name: 📦 Install dependencies
+      # ------------------------------
+      # 4. Cache pnpm store for faster installs
+      # ------------------------------
+      - name: 🧱 Setup pnpm Cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-
+
+      # ------------------------------
+      # 5. Install dependencies via setup.sh
+      # ------------------------------
+      - name: 📦 Install Dependencies
         run: |
           chmod +x setup.sh
           ./setup.sh --skip-dev-servers
         env:
           CI: true
 
+      # ------------------------------
+      # 6. Verify build artifacts
+      # ------------------------------
       - name: ✅ Verify Build Artifacts
         run: |
           echo "Verifying workspace builds..."
@@ -48,11 +73,17 @@ jobs:
             fi
           done
 
-      - name: 🧹 Run Lint & Tests (if defined)
+      # ------------------------------
+      # 7. Lint & test (if scripts exist)
+      # ------------------------------
+      - name: 🧹 Run Lint & Tests (optional)
         run: |
           pnpm -r run lint --if-present
           pnpm -r run test --if-present
 
+  # ========================================================================
+  # Deploy Web (Vercel)
+  # ========================================================================
   deploy-web:
     name: 🚀 Deploy Web (Vercel)
     needs: [setup-build-test]
@@ -68,6 +99,11 @@ jobs:
         with:
           node-version: 18.x
 
+      - name: ⚙️ Enable Corepack & Prepare pnpm
+        run: |
+          corepack enable
+          corepack prepare pnpm@latest --activate
+
       - name: Deploy to Vercel
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
@@ -80,6 +116,9 @@ jobs:
           vercel build --token $VERCEL_TOKEN
           vercel deploy --prebuilt --token $VERCEL_TOKEN --prod
 
+  # ========================================================================
+  # Deploy API (Render)
+  # ========================================================================
   deploy-api:
     name: ⚡ Deploy API (Render)
     needs: [setup-build-test]
@@ -101,8 +140,11 @@ jobs:
             -d '' \
             https://api.render.com/v1/services/$RENDER_SERVICE_ID/deploys
 
+  # ========================================================================
+  # Optional: Docker image builds (GHCR)
+  # ========================================================================
   docker-build:
-    name: 🐳 Optional Docker Build
+    name: 🐳 Build & Push Docker Images
     needs: [setup-build-test]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
