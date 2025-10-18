@@ -1,0 +1,6 @@
+git add web/vercel.json
+git commit -m "Add Vercel deployment config"
+git pull origin main --rebase
+git push origin main
+
+
