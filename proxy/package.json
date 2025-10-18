@@ -12,7 +12,7 @@
   "private": true,
   "scripts": {
     "dev": "echo \"Running Proxy dev server...\" && sleep infinity",
- main
+ 
     "build": "echo \"Proxy build complete.\"",
     "lint": "echo \"Proxy lint complete.\"",
     "test": "echo \"Proxy tests complete.\""
