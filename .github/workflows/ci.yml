@@ -107,9 +107,7 @@ jobs:
       - name: Deploy to Vercel
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-        run: |
+        run: | 
           npm i -g vercel
           cd web
           vercel pull --yes --token $VERCEL_TOKEN
@@ -129,16 +127,29 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Deploy to Render
-        env:
-          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
-          RENDER_SERVICE_ID: ${{ secrets.RENDER_SERVICE_ID }}
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18.x
+
+      - name: ⚙️ Enable Corepack & Prepare pnpm
         run: |
-          curl -X POST \
-            -H "Accept: application/json" \
-            -H "Authorization: Bearer $RENDER_API_KEY" \
-            -d '' \
-            https://api.render.com/v1/services/$RENDER_SERVICE_ID/deploys
+          corepack enable
+          corepack prepare pnpm@latest --activate
+
+      - name: 📦 Install & Build API
+        run: |
+          if [ -d "api" ]; then
+            cd api
+            corepack enable
+            corepack prepare pnpm@latest --activate
+            pnpm install --frozen-lockfile
+            pnpm build --if-present
+          else
+            echo "No api workspace found; skipping API build."
+          fi
+        env:
+          CI: true
 
   # ========================================================================
   # Optional: Docker image builds (GHCR)
@@ -148,7 +159,6 @@ jobs:
     needs: [setup-build-test]
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
