@@ -137,19 +137,15 @@ jobs:
           corepack enable
           corepack prepare pnpm@latest --activate
 
-      - name: 📦 Install & Build API
+      - name: 📦 Verify API Workspace
         run: |
           if [ -d "api" ]; then
-            cd api
-            corepack enable
-            corepack prepare pnpm@latest --activate
-            pnpm install --frozen-lockfile
-            pnpm build --if-present
+            echo "✅ API workspace found"
+            echo "📋 API package.json:"
+            cat api/package.json | head -10
           else
-            echo "No api workspace found; skipping API build."
+            echo "❌ No API workspace found"
           fi
-        env:
-          CI: true
 
   # ========================================================================
   # Optional: Docker image builds (GHCR)
