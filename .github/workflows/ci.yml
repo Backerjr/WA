@@ -139,6 +139,8 @@ jobs:
 
       - name: 📦 Verify API Workspace
         run: |
+          echo "🕒 Workflow run at: $(date)"
+          echo "🔧 Using FIXED workflow (no pnpm install --frozen-lockfile)"
           if [ -d "api" ]; then
             echo "✅ API workspace found"
             echo "📋 API package.json:"
