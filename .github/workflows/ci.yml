@@ -189,9 +189,10 @@ jobs:
 
       - name: Build & Push Images
         run: |
+          OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
           for ws in api web proxy; do
             if [ -f "$ws/Dockerfile" ]; then
-              IMAGE=ghcr.io/${{ github.repository_owner }}/$ws:latest
+              IMAGE=ghcr.io/$OWNER/$ws:latest
               echo "🚀 Building and pushing $IMAGE"
               docker build -t $IMAGE $ws
               docker push $IMAGE
