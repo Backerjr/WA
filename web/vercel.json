@@ -1,18 +1,8 @@
 {
-  "$schema": "https://openapi.vercel.sh/vercel.json",
   "version": 2,
-
-  "buildCommand": "pnpm run build",
   "outputDirectory": "public",
+
   "framework": null,
-
-  "env": {
-    "NODE_ENV": "production",
-    "API_BASE_URL": "https://wa-api-kappa.vercel.app",
-    "APP_NAME": "Rozmowa"
-  },
-
-  "devCommand": "pnpm run dev",
 
   "rewrites": [
     {
