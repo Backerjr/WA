@@ -14,7 +14,7 @@ Docker (optional):
 
 ## Deployment
 
-- GitHub Pages (static web/public): pushes to main trigger .github/workflows/pages.yml, live at GitHub Pages environment URL.
+- GitHub Pages (static web/public): pushes to main trigger .github/workflows/pages.yml. Live URL: https://backerjr.github.io/WA/
 - Vercel (optional): add 3 secrets in repo settings (VERCEL_TOKEN, VERCEL_ORG_ID, VERCEL_PROJECT_ID) to enable .github/workflows/ci.yml deploy-web job.
 - API hosting (optional): Render recommended. Create a Web Service pointing to api/, Start Command node server.js.
 
