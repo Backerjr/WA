@@ -4,11 +4,251 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Polyglot Starter Web</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+      .container {
+        background: white;
+        border-radius: 12px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        padding: 40px;
+        max-width: 800px;
+        width: 100%;
+      }
+      h1 {
+        color: #667eea;
+        margin-bottom: 10px;
+        font-size: 2rem;
+      }
+      .subtitle {
+        color: #666;
+        margin-bottom: 30px;
+        font-size: 1rem;
+      }
+      .status {
+        background: #f7f9fc;
+        border-left: 4px solid #667eea;
+        padding: 15px;
+        margin: 20px 0;
+        border-radius: 4px;
+      }
+      .status.loading {
+        border-left-color: #ffa500;
+      }
+      .status.error {
+        border-left-color: #e74c3c;
+        background: #fef5f5;
+      }
+      .status.success {
+        border-left-color: #27ae60;
+        background: #f0fdf4;
+      }
+      .api-data {
+        background: #f7f9fc;
+        padding: 15px;
+        border-radius: 4px;
+        margin: 15px 0;
+      }
+      .api-data pre {
+        background: #2d3748;
+        color: #e2e8f0;
+        padding: 15px;
+        border-radius: 4px;
+        overflow-x: auto;
+        font-size: 0.875rem;
+      }
+      button {
+        background: #667eea;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 1rem;
+        margin: 5px;
+        transition: background 0.3s;
+      }
+      button:hover {
+        background: #5568d3;
+      }
+      button:disabled {
+        background: #cbd5e0;
+        cursor: not-allowed;
+      }
+      .footer {
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid #e2e8f0;
+        color: #718096;
+        font-size: 0.875rem;
+      }
+      .endpoint-list {
+        margin: 20px 0;
+      }
+      .endpoint {
+        background: white;
+        border: 1px solid #e2e8f0;
+        padding: 10px;
+        margin: 8px 0;
+        border-radius: 4px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .method {
+        background: #667eea;
+        color: white;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.75rem;
+        font-weight: bold;
+        margin-right: 10px;
+      }
+      .method.post {
+        background: #27ae60;
+      }
+    </style>
   </head>
   <body>
-    <main>
-      <h1>Polyglot Starter Web</h1>
-  <p>Deployed via GitHub Pages. API routes can be added later.</p>
-    </main>
+    <div class="container">
+      <h1>🌐 Polyglot Starter</h1>
+      <p class="subtitle">Deployed via GitHub Pages with API integration</p>
+
+      <div id="status" class="status loading">
+        <strong>Status:</strong> Checking API connection...
+      </div>
+
+      <div class="endpoint-list">
+        <h3>Available Endpoints</h3>
+        <div class="endpoint">
+          <div>
+            <span class="method">GET</span>
+            <code>/api/status</code>
+          </div>
+          <button onclick="testEndpoint('/api/status')">Test</button>
+        </div>
+        <div class="endpoint">
+          <div>
+            <span class="method">GET</span>
+            <code>/api/data</code>
+          </div>
+          <button onclick="testEndpoint('/api/data')">Test</button>
+        </div>
+        <div class="endpoint">
+          <div>
+            <span class="method post">POST</span>
+            <code>/api/echo</code>
+          </div>
+          <button onclick="testEcho()">Test</button>
+        </div>
+      </div>
+
+      <div id="api-response" class="api-data" style="display: none;">
+        <h4>API Response:</h4>
+        <pre id="response-content"></pre>
+      </div>
+
+      <div class="footer">
+        <p>
+          <strong>Live URL:</strong> <a href="https://backerjr.github.io/WA/" target="_blank">https://backerjr.github.io/WA/</a>
+        </p>
+        <p>
+          <strong>Repository:</strong> <a href="https://github.com/Backerjr/WA" target="_blank">github.com/Backerjr/WA</a>
+        </p>
+      </div>
+    </div>
+
+    <script>
+      // Configuration
+      const API_BASE_URL = window.location.hostname === 'localhost' 
+        ? 'http://localhost:3000'
+        : 'https://polyglot-api.onrender.com'; // Update this with your actual Render URL
+
+      // Check API health on load
+      async function checkApiHealth() {
+        const statusEl = document.getElementById('status');
+        try {
+          const response = await fetch(`${API_BASE_URL}/health`);
+          const data = await response.json();
+          
+          if (response.ok) {
+            statusEl.className = 'status success';
+            statusEl.innerHTML = `
+              <strong>✅ API Connected</strong><br>
+              Status: ${data.status} | Uptime: ${Math.floor(data.uptime)}s
+            `;
+          } else {
+            throw new Error('API returned non-OK status');
+          }
+        } catch (error) {
+          statusEl.className = 'status error';
+          statusEl.innerHTML = `
+            <strong>❌ API Offline</strong><br>
+            ${error.message}<br>
+            <small>Make sure the API is deployed to Render or running locally on port 3000</small>
+          `;
+        }
+      }
+
+      // Test an endpoint
+      async function testEndpoint(endpoint) {
+        const responseDiv = document.getElementById('api-response');
+        const contentPre = document.getElementById('response-content');
+        
+        responseDiv.style.display = 'block';
+        contentPre.textContent = 'Loading...';
+        
+        try {
+          const response = await fetch(`${API_BASE_URL}${endpoint}`);
+          const data = await response.json();
+          contentPre.textContent = JSON.stringify(data, null, 2);
+        } catch (error) {
+          contentPre.textContent = `Error: ${error.message}`;
+        }
+      }
+
+      // Test echo endpoint with POST
+      async function testEcho() {
+        const responseDiv = document.getElementById('api-response');
+        const contentPre = document.getElementById('response-content');
+        
+        responseDiv.style.display = 'block';
+        contentPre.textContent = 'Loading...';
+        
+        try {
+          const response = await fetch(`${API_BASE_URL}/api/echo`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              message: 'Hello from frontend!',
+              timestamp: new Date().toISOString()
+            })
+          });
+          const data = await response.json();
+          contentPre.textContent = JSON.stringify(data, null, 2);
+        } catch (error) {
+          contentPre.textContent = `Error: ${error.message}`;
+        }
+      }
+
+      // Initialize
+      checkApiHealth();
+    </script>
   </body>
 </html>

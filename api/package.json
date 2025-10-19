@@ -9,9 +9,16 @@
     "start": "node server.js",
     "build": "echo \"API build complete.\"",
     "lint": "echo \"API lint complete.\"",
-    "test": "echo \"API tests complete.\""
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage"
   },
   "dependencies": {
     "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "vitest": "^1.0.0",
+    "@vitest/coverage-v8": "^1.0.0",
+    "supertest": "^6.3.3"
   }
 }
