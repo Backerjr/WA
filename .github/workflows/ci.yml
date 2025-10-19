@@ -104,16 +104,31 @@ jobs:
           corepack enable
           corepack prepare pnpm@latest --activate
 
+      - name: Check Vercel Secrets
+        id: secrets
+        run: |
+          if [ -z "${{ secrets.VERCEL_TOKEN }}" ] || [ -z "${{ secrets.VERCEL_ORG_ID }}" ] || [ -z "${{ secrets.VERCEL_PROJECT_ID }}" ]; then
+            echo "missing=true" >> $GITHUB_OUTPUT
+          else
+            echo "missing=false" >> $GITHUB_OUTPUT
+          fi
+
       - name: Deploy to Vercel
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        if: steps.secrets.outputs.missing == 'false'
         run: |
           npm i -g vercel@latest
           cd web
           vercel pull --yes --environment=production --token="$VERCEL_TOKEN"
           vercel --prod --token="$VERCEL_TOKEN"
+
+      - name: Skip Vercel Deploy (Secrets Missing)
+        if: steps.secrets.outputs.missing == 'true'
+        run: |
+          echo "Skipping Vercel deployment because required secrets are missing."
 
   # ========================================================================
   # Deploy API (Render)

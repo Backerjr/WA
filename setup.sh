@@ -85,7 +85,33 @@ print_success_banner() {
 
 main() {
   cd "$(dirname "$0")"
-  check_node; check_pnpm; setup_env; install_deps; build_workspaces; start_dev_servers; docker_setup; print_success_banner;
+
+  # Parse flags
+  SKIP_DEV_SERVERS=false
+  for arg in "$@"; do
+    case "$arg" in
+      --skip-dev-servers)
+        SKIP_DEV_SERVERS=true
+        shift
+        ;;
+      *) ;;
+    esac
+  done
+
+  check_node
+  check_pnpm
+  setup_env
+  install_deps
+  build_workspaces
+
+  if [ "$SKIP_DEV_SERVERS" = true ]; then
+    log_info "Skipping dev servers as requested (--skip-dev-servers)."
+  else
+    start_dev_servers
+  fi
+
+  docker_setup
+  print_success_banner
 }
 
 main "$@"

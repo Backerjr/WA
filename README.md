@@ -1,5 +1,22 @@
 # WA
-Rozmowa is a cozy, creative language and cultural hub combining Polish coffee culture, crafts workshops, and real conversation clubs. Our strategy is simple: no-stress English, crafts + coffee = community edge.
+Rozmowa is a cozy, creative language and cultural hub combining Polish coffee culture, crafts workshops, and real conversation clubs. Strategy: no-stress English, crafts + coffee = community edge.
+
+## Quick start
+
+- Prereqs: Node 18+, pnpm 9 (Corepack auto-installs)
+- Install deps: pnpm install
+- Run API: pnpm --filter @polyglot/api run dev (http://localhost:3000)
+- Run Web (static): pnpm --filter @polyglot/web run dev (http://localhost:5173)
+- All services: ./setup.sh (or ./setup.sh --skip-dev-servers in CI)
+
+Docker (optional):
+- docker compose up -d (web:5173, api:3000)
+
+## Deployment
+
+- GitHub Pages (static web/public): pushes to main trigger .github/workflows/pages.yml, live at GitHub Pages environment URL.
+- Vercel (optional): add 3 secrets in repo settings (VERCEL_TOKEN, VERCEL_ORG_ID, VERCEL_PROJECT_ID) to enable .github/workflows/ci.yml deploy-web job.
+- API hosting (optional): Render recommended. Create a Web Service pointing to api/, Start Command node server.js.
 
 ## Debugging 500 Internal Server Errors
 
@@ -31,3 +48,12 @@ If you see a 500 in the browser console, the error is on the server side. Use th
 - Upstream timeouts/failures if your API calls other services
 
 Tip: Add structured logging (e.g., pino/pino-http) and request IDs for easier correlation across services.
+
+## Project structure
+
+- api: Express API with health, error handling
+- web: Static site in web/public with vercel.json for headers/rewrites
+- proxy: Placeholder service (not required)
+- .github/workflows: CI and Pages deploy
+- docker-compose.yml: Local dev for API + Web
+

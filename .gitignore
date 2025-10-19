@@ -1,0 +1,28 @@
+# Node
+node_modules/
+package-lock.json
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor/OS
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/settings.json
+
+# Backups and transient files
+**/*.save
+**/*~
+**/*.swp
+**/*.tmp
+**/*.bak
+
+# Stray misnamed files
+**/vercel.json'
+**/vercel.json'.save
+**/package.json≈
+nano docker-compose.yml

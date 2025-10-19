@@ -1,15 +1,16 @@
 {
   "name": "@polyglot/web",
   "version": "0.1.0",
-
-  "version": "0.0.0",
- 
   "private": true,
   "scripts": {
-    "dev": "echo \"Running Web dev server...\" && sleep infinity",
+    "dev": "serve public -l 5173",
+    "start": "serve public -l $PORT",
     "build": "echo \"Web build complete.\"",
     "lint": "echo \"Web lint complete.\"",
     "test": "echo \"Web tests complete.\""
+  },
+  "devDependencies": {
+    "serve": "^14.2.3"
   }
 }
 
