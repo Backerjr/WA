@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Polyglot Starter Web</title>
+    <title>Rozmowa - Language & Cultural Exchange Hub</title>
     <style>
       * {
         margin: 0;
@@ -14,7 +14,7 @@
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
         line-height: 1.6;
         color: #333;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #ec4899 100%);
         min-height: 100vh;
         display: flex;
         align-items: center;
@@ -30,9 +30,9 @@
         width: 100%;
       }
       h1 {
-        color: #667eea;
+        color: #3b82f6;
         margin-bottom: 10px;
-        font-size: 2rem;
+        font-size: 2.5rem;
       }
       .subtitle {
         color: #666;
@@ -41,7 +41,7 @@
       }
       .status {
         background: #f7f9fc;
-        border-left: 4px solid #667eea;
+        border-left: 4px solid #3b82f6;
         padding: 15px;
         margin: 20px 0;
         border-radius: 4px;
@@ -72,7 +72,7 @@
         font-size: 0.875rem;
       }
       button {
-        background: #667eea;
+        background: #3b82f6;
         color: white;
         border: none;
         padding: 12px 24px;
@@ -83,7 +83,7 @@
         transition: background 0.3s;
       }
       button:hover {
-        background: #5568d3;
+        background: #2563eb;
       }
       button:disabled {
         background: #cbd5e0;
@@ -110,7 +110,7 @@
         align-items: center;
       }
       .method {
-        background: #667eea;
+        background: #3b82f6;
         color: white;
         padding: 4px 8px;
         border-radius: 4px;
@@ -125,35 +125,35 @@
   </head>
   <body>
     <div class="container">
-      <h1>🌐 Polyglot Starter</h1>
-      <p class="subtitle">Deployed via GitHub Pages with API integration</p>
+      <h1>🗣️ Rozmowa</h1>
+      <p class="subtitle">Your Language & Cultural Exchange Hub - Connect, Learn, Grow Together</p>
 
       <div id="status" class="status loading">
-        <strong>Status:</strong> Checking API connection...
+        <strong>Status:</strong> Connecting to Rozmowa API...
       </div>
 
       <div class="endpoint-list">
-        <h3>Available Endpoints</h3>
+        <h3>🌍 Platform Features</h3>
         <div class="endpoint">
           <div>
             <span class="method">GET</span>
-            <code>/api/status</code>
+            <code>/api/health</code> - System Health Check
           </div>
-          <button onclick="testEndpoint('/api/status')">Test</button>
+          <button onclick="testEndpoint('/health')">Test</button>
         </div>
         <div class="endpoint">
           <div>
             <span class="method">GET</span>
-            <code>/api/data</code>
+            <code>/api/languages</code> - Available Languages
           </div>
-          <button onclick="testEndpoint('/api/data')">Test</button>
+          <button onclick="testEndpoint('/api/languages')">Test</button>
         </div>
         <div class="endpoint">
           <div>
             <span class="method post">POST</span>
-            <code>/api/echo</code>
+            <code>/api/translate</code> - Translation Service
           </div>
-          <button onclick="testEcho()">Test</button>
+          <button onclick="testTranslate()">Test</button>
         </div>
       </div>
 
@@ -164,10 +164,13 @@
 
       <div class="footer">
         <p>
-          <strong>Live URL:</strong> <a href="https://backerjr.github.io/WA/" target="_blank">https://backerjr.github.io/WA/</a>
+          <strong>🌐 Rozmowa Platform:</strong> <a href="https://wa-api-kappa.vercel.app/" target="_blank">wa-api-kappa.vercel.app</a>
         </p>
         <p>
-          <strong>Repository:</strong> <a href="https://github.com/Backerjr/WA" target="_blank">github.com/Backerjr/WA</a>
+          <strong>📦 Repository:</strong> <a href="https://github.com/Backerjr/WA" target="_blank">github.com/Backerjr/WA</a>
+        </p>
+        <p style="margin-top: 15px; font-style: italic; color: #94a3b8;">
+          "Rozmowa" (Polish) - meaning "conversation" - where cultures meet through language
         </p>
       </div>
     </div>
@@ -176,7 +179,7 @@
       // Configuration
       const API_BASE_URL = window.location.hostname === 'localhost' 
         ? 'http://localhost:3000'
-        : 'https://polyglot-api.onrender.com'; // Update this with your actual Render URL
+        : 'https://wa-api-kappa.vercel.app'; // Rozmowa API on Vercel
 
       // Check API health on load
       async function checkApiHealth() {
@@ -188,7 +191,7 @@
           if (response.ok) {
             statusEl.className = 'status success';
             statusEl.innerHTML = `
-              <strong>✅ API Connected</strong><br>
+              <strong>✅ Rozmowa API Connected</strong><br>
               Status: ${data.status} | Uptime: ${Math.floor(data.uptime)}s
             `;
           } else {
@@ -197,9 +200,9 @@
         } catch (error) {
           statusEl.className = 'status error';
           statusEl.innerHTML = `
-            <strong>❌ API Offline</strong><br>
+            <strong>❌ Rozmowa API Offline</strong><br>
             ${error.message}<br>
-            <small>Make sure the API is deployed to Render or running locally on port 3000</small>
+            <small>The language exchange platform is currently unavailable. Please try again later.</small>
           `;
         }
       }
@@ -222,7 +225,7 @@
       }
 
       // Test echo endpoint with POST
-      async function testEcho() {
+      async function testTranslate() {
         const responseDiv = document.getElementById('api-response');
         const contentPre = document.getElementById('response-content');
         
@@ -230,13 +233,15 @@
         contentPre.textContent = 'Loading...';
         
         try {
-          const response = await fetch(`${API_BASE_URL}/api/echo`, {
+          const response = await fetch(`${API_BASE_URL}/api/translate`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              message: 'Hello from frontend!',
+              text: 'Hello, welcome to Rozmowa!',
+              from: 'en',
+              to: 'pl',
               timestamp: new Date().toISOString()
             })
           });
