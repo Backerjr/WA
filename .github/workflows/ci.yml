@@ -88,7 +88,7 @@ jobs:
     name: 🚀 Deploy Web (Vercel)
     needs: [setup-build-test]
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
 
     steps:
       - name: Checkout
@@ -107,12 +107,13 @@ jobs:
       - name: Deploy to Vercel
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
         run: | 
-          npm i -g vercel
+          npm i -g vercel@latest
           cd web
-          vercel pull --yes --token $VERCEL_TOKEN
-          # Use single-step deployment to avoid environment mismatch entirely
-          vercel --prod --token $VERCEL_TOKEN
+          vercel pull --yes --environment=production --token="$VERCEL_TOKEN"
+          vercel --prod --token="$VERCEL_TOKEN"
 
   # ========================================================================
   # Deploy API (Render)
