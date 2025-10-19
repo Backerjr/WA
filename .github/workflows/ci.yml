@@ -111,7 +111,7 @@ jobs:
           npm i -g vercel
           cd web
           vercel pull --yes --token $VERCEL_TOKEN
-          vercel build --token $VERCEL_TOKEN
+          vercel build --prod --token $VERCEL_TOKEN
           vercel deploy --prebuilt --token $VERCEL_TOKEN --prod
 
   # ========================================================================
