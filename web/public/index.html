@@ -139,7 +139,7 @@
             <span class="method">GET</span>
             <code>/api/health</code> - System Health Check
           </div>
-          <button onclick="testEndpoint('/health')">Test</button>
+          <button onclick="testEndpoint('/api/health')">Test</button>
         </div>
         <div class="endpoint">
           <div>
@@ -179,13 +179,13 @@
       // Configuration
       const API_BASE_URL = window.location.hostname === 'localhost' 
         ? 'http://localhost:3000'
-        : 'https://wa-api-kappa.vercel.app'; // Rozmowa API on Vercel
+        : '';
 
       // Check API health on load
       async function checkApiHealth() {
         const statusEl = document.getElementById('status');
         try {
-          const response = await fetch(`${API_BASE_URL}/health`);
+          const response = await fetch(`${API_BASE_URL}/api/health`);
           const data = await response.json();
           
           if (response.ok) {
