@@ -30,3 +30,7 @@ nano docker-compose.yml
 
 # Test
 test
+
+permissions:
+  contents: read
+  packages: write  # ✅ Allows pushing to ghcr.io
