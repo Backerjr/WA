@@ -111,7 +111,8 @@ jobs:
           npm i -g vercel
           cd web
           vercel pull --yes --token $VERCEL_TOKEN
-          vercel build --prod --token $VERCEL_TOKEN  # Now builds for production!
+          # CRITICAL: Build for production environment to match deployment target
+          vercel build --prod --token $VERCEL_TOKEN
           vercel deploy --prebuilt --token $VERCEL_TOKEN --prod
 
   # ========================================================================
