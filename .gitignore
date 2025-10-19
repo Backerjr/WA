@@ -1,4 +1,4 @@
-# Node
+"test": "vitest run"# Node
 node_modules/
 **/node_modules/
 package-lock.json
@@ -27,3 +27,6 @@ pnpm-debug.log*
 **/vercel.json'.save
 **/package.json≈
 nano docker-compose.yml
+
+# Test
+test
