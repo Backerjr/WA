@@ -8,8 +8,8 @@
 
   "env": {
     "NODE_ENV": "production",
-    "API_BASE_URL": "https://polyglot-api.onrender.com",
-    "APP_NAME": "Polyglot Starter"
+    "API_BASE_URL": "https://wa-api-kappa.vercel.app",
+    "APP_NAME": "Rozmowa"
   },
 
   "devCommand": "pnpm run dev",
@@ -17,7 +17,7 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "https://polyglot-api.onrender.com/$1"
+      "destination": "https://wa-api-kappa.vercel.app/$1"
     }
   ],
 
